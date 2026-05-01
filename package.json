@@ -1,0 +1,22 @@
+{
+  "name": "highway-star",
+  "version": "1.0.0",
+  "description": "Highway:Star - Private mobile performance tracker for track and field athletes",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve highway-star -l 3000",
+    "start": "npx serve highway-star -l 3000",
+    "build": "echo 'Static site - no build required'"
+  },
+  "keywords": [
+    "track-and-field",
+    "athletics",
+    "performance-tracker",
+    "mobile-web-app"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
