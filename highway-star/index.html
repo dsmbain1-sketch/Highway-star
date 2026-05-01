@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Highway:Star</title>
+    <meta
+      name="description"
+      content="Highway:Star private performance tracker for track and field athletes."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <section id="welcomeScreen" class="screen active">
+        <div class="hero card">
+          <p class="pill">Private Mobile Performance Tracker</p>
+          <h1>Highway<span>:Star</span></h1>
+          <p class="tagline">We track your time, so you can track your progress.</p>
+          <button class="btn primary full" id="getStartedBtn">Get Started</button>
+        </div>
+      </section>
+
+      <section id="authScreen" class="screen">
+        <div class="card">
+          <h2>Sign In / Sign Up</h2>
+          <p class="muted">Your account and performance history stay private to you.</p>
+          <form id="authForm">
+            <label>
+              Email
+              <input id="authEmail" type="email" required placeholder="you@example.com" />
+            </label>
+            <label>
+              Password
+              <input id="authPassword" type="password" required placeholder="Minimum 8 characters" />
+            </label>
+            <label>
+              Name
+              <input id="authName" placeholder="Only needed for sign up" />
+            </label>
+            <label class="check">
+              <input id="keepSignedIn" type="checkbox" checked />
+              Keep me signed in
+            </label>
+            <div class="row">
+              <button class="btn ghost" type="button" id="signInBtn">Sign In</button>
+              <button class="btn primary" type="button" id="signUpBtn">Create Account</button>
+            </div>
+            <p id="authMessage" class="muted"></p>
+          </form>
+        </div>
+      </section>
+
+      <section id="mainApp" class="screen">
+        <header class="topbar">
+          <div class="topbar-user">
+            <img id="appUserAvatar" class="avatar" alt="Profile picture" />
+            <div>
+            <h3 id="appUserName">Athlete</h3>
+            <p id="appUserMeta" class="muted">Private profile</p>
+            </div>
+          </div>
+          <button class="btn ghost" id="logoutBtn">Log Out</button>
+        </header>
+
+        <main class="content">
+          <section id="tabHome" class="tab active">
+            <div class="card">
+              <h2>Recent Performances</h2>
+              <div id="recentPerformances"></div>
+            </div>
+            <div class="card">
+              <h2>Notifications</h2>
+              <ul id="notifications" class="list"></ul>
+            </div>
+          </section>
+
+          <section id="tabAdd" class="tab">
+            <div class="card">
+              <h2>Add Performance</h2>
+              <form id="performanceForm">
+                <label>
+                  Event
+                  <select id="perfEvent" required></select>
+                </label>
+                <label>
+                  Time
+                  <input id="perfTime" required placeholder="e.g. 10.94 or 1:52.30" />
+                </label>
+                <label>
+                  Time Format
+                  <select id="perfTimeFormat">
+                    <option value="seconds">Seconds</option>
+                    <option value="minutes">Minutes:Seconds</option>
+                  </select>
+                </label>
+                <label>
+                  Meet Name
+                  <input id="perfMeet" required placeholder="State Invitational" />
+                </label>
+                <label>
+                  Date
+                  <input id="perfDate" type="date" required />
+                </label>
+                <label>
+                  Location
+                  <input id="perfLocation" required placeholder="Austin, TX" />
+                </label>
+                <label>
+                  Mode
+                  <select id="perfMode">
+                    <option value="verified">Verified</option>
+                    <option value="unverified">Unverified</option>
+                    <option value="casual">Casual Mode</option>
+                  </select>
+                </label>
+                <label>
+                  Official Results Link
+                  <input id="perfLink" type="url" placeholder="Required for verified entries" />
+                </label>
+                <label>
+                  Goal Time (optional)
+                  <input id="perfGoal" placeholder="Matches selected time format" />
+                </label>
+                <button class="btn ghost full hidden" type="button" id="perfCancelEdit">Cancel Edit</button>
+                <button class="btn primary full" type="submit" id="perfSubmitBtn">Save Performance</button>
+                <p id="perfMessage" class="muted"></p>
+              </form>
+            </div>
+          </section>
+
+          <section id="tabStats" class="tab">
+            <div class="card">
+              <h2>Stats Dashboard</h2>
+              <div class="stats-grid">
+                <article><p>Entries</p><h3 id="statEntries">0</h3></article>
+                <article><p>Verified</p><h3 id="statVerified">0</h3></article>
+                <article><p>Personal Bests</p><h3 id="statPbs">0</h3></article>
+              </div>
+            </div>
+            <div class="card">
+              <div class="row">
+                <h2>Trend</h2>
+                <select id="chartEvent"></select>
+              </div>
+              <canvas id="trendCanvas" width="900" height="260"></canvas>
+            </div>
+            <div class="card">
+              <h2>Event Progress</h2>
+              <div id="eventProgress"></div>
+            </div>
+          </section>
+
+          <section id="tabProfile" class="tab">
+            <div class="card">
+              <h2>Profile</h2>
+              <form id="profileForm">
+                <label>
+                  Name
+                  <input id="profileName" required />
+                </label>
+                <label>
+                  Profile Picture
+                  <input id="profileAvatarInput" type="file" accept="image/*" />
+                </label>
+                <img id="profileAvatarPreview" class="avatar large" alt="Profile preview" />
+                <label>
+                  Region
+                  <input id="profileRegion" required />
+                </label>
+                <label>
+                  Events
+                  <input id="profileEvents" placeholder="100m, 200m, 400m" />
+                </label>
+                <label>
+                  Bio
+                  <textarea id="profileBio" rows="3" placeholder="Your athlete story"></textarea>
+                </label>
+                <button class="btn primary full" type="submit">Save Profile</button>
+              </form>
+            </div>
+          </section>
+        </main>
+
+        <nav class="bottom-nav">
+          <button class="nav-btn active" data-tab="tabHome">Home</button>
+          <button class="nav-btn" data-tab="tabAdd">Add Time</button>
+          <button class="nav-btn" data-tab="tabStats">Stats</button>
+          <button class="nav-btn" data-tab="tabProfile">Profile</button>
+        </nav>
+      </section>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
